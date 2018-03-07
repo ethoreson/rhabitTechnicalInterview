@@ -1,10 +1,8 @@
-.App {
-  text-align: center;
-}
-
 .header {
 	background-color: #ddd;
 	font-size: 20px;
+	color: #343433;
+	text-align: center;
 }
 
 .logo {
@@ -23,4 +21,15 @@
 .positionTitle {
 	font-size: 12px;
 	font-style: italic;
+}
+
+.hireEmployee {
+	background-color: #28A9E0;
+	color: white;
+	padding: 8px;
+	cursor: pointer;
+	margin-left: 20px;
+	font-size: 24px;
+	border: 2px solid grey;
+	margin-bottom: 50px;
 }

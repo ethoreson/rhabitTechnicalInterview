@@ -22,12 +22,33 @@ componentDidMount() {
 	})
 }
 
+hireNewEmployee = () => {
+	axios.post(
+		'http://localhost:3001/employees',
+		{ employee:
+			{
+				first_name: '',
+				last_name: '',
+				title: '',
+				manager_id: ''
+			}
+		}
+	)
+	.then(response => {
+		console.log(response)
+	})
+	.catch(error => console.log(error))
+}
+
 	render() {
 		return (
 			<div>
 				{this.state.employees.map((employee) => {
 					return (<Employee employee={employee} key={employee.id} />)
 				})}
+				<button className="hireEmployee" onClick={this.hireNewEmployee}>
+					Hire Employee
+				</button>
 			</div>
 		);
 	}
