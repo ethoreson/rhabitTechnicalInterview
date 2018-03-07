@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Employee from './Employee'
+import update from 'immutability-helper'
+import EmployeeForm from './EmployeeForm'
 
 class HierarchyMap extends Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			employees: []
+			employees: [],
+			editingEmployeeId: null
 		}
 	}
 
@@ -35,7 +38,10 @@ hireNewEmployee = () => {
 		}
 	)
 	.then(response => {
-		console.log(response)
+		const employees = update(this.state.employees, {
+			$splice: [[this.state.employees.length, 0, response.data]]
+		})
+	this.setState({employees: employees, editingEmployeeId: response.data.id})
 	})
 	.catch(error => console.log(error))
 }
@@ -44,7 +50,11 @@ hireNewEmployee = () => {
 		return (
 			<div>
 				{this.state.employees.map((employee) => {
-					return (<Employee employee={employee} key={employee.id} />)
+					if(this.state.editingEmployeeId === employee.id) {
+						return(<EmployeeForm employee={employee} key={employee.id} />)
+					} else {
+						return (<Employee employee={employee} key={employee.id} />)
+					}		
 				})}
 				<button className="hireEmployee" onClick={this.hireNewEmployee}>
 					Hire Employee
