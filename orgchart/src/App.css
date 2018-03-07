@@ -2,14 +2,25 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.header {
+	background-color: #ddd;
+	font-size: 20px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.logo {
+	height: 60%;
+	width: auto;
 }
 
+.chart {
+	height: 100px;
+	width: 540px;
+	margin: 15px;
+	font-size: 16px;
+	border: 1px solid grey;
+}
+
+.positionTitle {
+	font-size: 12px;
+	font-style: italic;
+}
