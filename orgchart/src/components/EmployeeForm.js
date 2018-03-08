@@ -13,6 +13,7 @@ class EmployeeForm extends Component {
 	}
 
 	handleInput = (e) => {
+		this.props.resetConfirmation()
 		this.setState({[e.target.name]: e.target.value})
 	}
 
@@ -55,7 +56,7 @@ class EmployeeForm extends Component {
 		return (
 			<div className="chart">
 				<form onBlur={this.handleBlur}>
-					<input className='input' type='text' name='first_name' placeholder='First Name' value={this.state.first_name} onChange={this.handleInput} />
+					<input className='input' type='text' name='first_name' placeholder='First Name' value={this.state.first_name} onChange={this.handleInput} ref={this.props.titleRef}/>
 					<input className='input' type='text' name='last_name' placeholder='Last Name' value={this.state.last_name} onChange={this.handleInput} />
 					<input className='input' type='text' name='title' placeholder='Position Title' value={this.state.title} onChange={this.handleInput} />
 					<input className='input' type='number' name='manager_id' placeholder='Manager' value={this.state.manager_id || ''} onChange={this.handleInput} />

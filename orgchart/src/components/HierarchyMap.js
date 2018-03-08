@@ -57,14 +57,19 @@ resetConfirmation = () => {
 	this.setState({notification: ''})
 }
 
+enableEditing = (id) => {
+	this.setState({editingEmployeeId: id},
+		() => { this.first_name.focus() })
+}
+
 	render() {
 		return (
 			<div>
 				{this.state.employees.map((employee) => {
 					if(this.state.editingEmployeeId === employee.id) {
-						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} resetConfirmation={this.resetConfirmation}/>)
+						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} titleRef= {input => this.first_name = input} resetConfirmation={this.resetConfirmation}/>)
 					} else {
-						return (<Employee employee={employee} key={employee.id} />)
+						return (<Employee employee={employee} key={employee.id} onClick={this.enableEditing} />)
 					}		
 				})}
 				<button className="hireEmployee" onClick={this.hireNewEmployee}>

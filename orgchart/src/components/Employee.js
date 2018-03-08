@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Employee = ({employee}) =>
-	<div className="chart" key={employee.id}>
-		<h3>{employee.first_name} {employee.last_name}</h3>
-		<h4 className="positionTitle">{employee.title}</h4>
-	</div>
+class Employee extends Component {
+
+	handleClick = () => {
+		this.props.onClick(this.props.employee.id)
+	}
+
+	render () {
+		return(
+			<div className="chart">
+				<h3 className="fullName" onClick={this.handleClick}>{this.props.employee.first_name}</h3>
+				<h3 className="fullName" onClick={this.handleClick}>{this.props.employee.last_name}</h3>
+				<h4 className="positionTitle" onClick={this.handleClick}>{this.props.employee.title}</h4>
+			</div>
+		)
+	}
+}
 
 export default Employee
