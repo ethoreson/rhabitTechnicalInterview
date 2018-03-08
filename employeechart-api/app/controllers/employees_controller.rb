@@ -15,6 +15,15 @@ class EmployeesController < ActionController::API
 		render json: @employee
 	end
 
+	def destroy
+		@employee = Employee.find(params[:id])
+		if @employee.destroy
+			head :no_content, status: :ok
+		else 
+			render json: @employee.errors, status: :unprocessable_entity
+		end
+	end
+
 	private
 
 	def employee_params

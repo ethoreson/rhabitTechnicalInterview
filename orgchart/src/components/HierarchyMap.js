@@ -62,6 +62,16 @@ enableEditing = (id) => {
 		() => { this.first_name.focus() })
 }
 
+retireEmployee = (id) => {
+	axios.delete(`http://localhost:3001/employees/${id}`)
+	.then(response => {
+		const employeeIndex = this.state.employees.findIndex(x => x.id === id)
+		const employees = update(this.state.employees, { $splice: [[employeeIndex, 1]]})
+		this.setState({employees: employees})
+	})
+	.catch(error => console.log(error))
+}
+
 	render() {
 		return (
 			<div>
@@ -69,7 +79,7 @@ enableEditing = (id) => {
 					if(this.state.editingEmployeeId === employee.id) {
 						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} titleRef= {input => this.first_name = input} resetConfirmation={this.resetConfirmation}/>)
 					} else {
-						return (<Employee employee={employee} key={employee.id} onClick={this.enableEditing} />)
+						return (<Employee employee={employee} key={employee.id} onClick={this.enableEditing} onDelete={this.retireEmployee} />)
 					}		
 				})}
 				<button className="hireEmployee" onClick={this.hireNewEmployee}>

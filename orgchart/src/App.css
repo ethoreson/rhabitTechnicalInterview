@@ -11,11 +11,17 @@
 }
 
 .chart {
-	height: 100px;
-	width: 540px;
+	height: 75px;
+	width: 340px;
 	margin: 15px;
 	font-size: 16px;
 	border: 1px solid grey;
+	padding-left: 15px;
+	padding-top: 10px;
+}
+
+.fullName {
+	display: inline;
 }
 
 .positionTitle {
@@ -39,4 +45,17 @@
 	margin-top, margin-bottom: 5px;
 	width: 100px;
 	font-size: 14px;
+}
+
+.retireButton {
+	visibility: hidden;
+	float: right;
+	margin: 3px;
+	font-size: 12px;
+	cursor: pointer;
+	color: #81C041;
+}
+
+.chart:hover .retireButton {
+	visibility: visible;
 }
