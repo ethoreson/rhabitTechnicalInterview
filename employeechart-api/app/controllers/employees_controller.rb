@@ -4,6 +4,10 @@ class EmployeesController < ActionController::API
 		render json: @employees
 	end
 
+	def has_managerId?
+		employee.manager_id?
+	end
+
 	def create
 		@employee = Employee.create(employee_params)
 		render json: @employee
