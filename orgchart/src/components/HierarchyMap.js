@@ -10,7 +10,8 @@ class HierarchyMap extends Component {
 		super(props)
 		this.state = {
 			employees: [],
-			editingEmployeeId: null
+			editingEmployeeId: null,
+			notification: ''
 		}
 	}
 
@@ -49,7 +50,11 @@ updateEmployee = (employee) => {
 	const employees = update(this.state.employees, {
 		[employeeIndex]: { $set: employee }
 	})
-	this.setState({employees: employees})
+	this.setState({employees: employees, notification: 'Employee Added!'})
+}
+
+resetConfirmation = () => {
+	this.setState({notification: ''})
 }
 
 	render() {
@@ -57,7 +62,7 @@ updateEmployee = (employee) => {
 			<div>
 				{this.state.employees.map((employee) => {
 					if(this.state.editingEmployeeId === employee.id) {
-						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} />)
+						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} resetConfirmation={this.resetConfirmation}/>)
 					} else {
 						return (<Employee employee={employee} key={employee.id} />)
 					}		
@@ -65,6 +70,9 @@ updateEmployee = (employee) => {
 				<button className="hireEmployee" onClick={this.hireNewEmployee}>
 					Hire Employee
 				</button>
+				<span className="confirmation">
+					{this.state.notification}
+				</span>
 			</div>
 		);
 	}
