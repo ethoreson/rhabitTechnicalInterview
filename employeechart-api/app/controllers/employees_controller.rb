@@ -1,6 +1,6 @@
 class EmployeesController < ActionController::API
 	def index
-		@employees = Employee.order("manager_id DESC")
+		@employees = Employee.order("manager_id ASC")
 		render json: @employees
 	end
 

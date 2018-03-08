@@ -15,19 +15,17 @@ class HierarchyMap extends Component {
 	}
 
 componentDidMount() {
-  axios.get('http://localhost:3001/employees.json')
+  axios.get(`http://localhost:3001/employees.json`)
   .then(response => {
     console.log(response)
     this.setState({employees: response.data})
   })
-  .catch( (error) => {
-  	const response = error.response
-	})
+  .catch(error => console.log(error))
 }
 
 hireNewEmployee = () => {
 	axios.post(
-		'http://localhost:3001/employees',
+		`http://localhost:3001/employees`,
 		{ employee:
 			{
 				first_name: '',
