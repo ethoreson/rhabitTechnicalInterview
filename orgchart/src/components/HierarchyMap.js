@@ -44,12 +44,20 @@ hireNewEmployee = () => {
 	.catch(error => console.log(error))
 }
 
+updateEmployee = (employee) => {
+	const employeeIndex = this.state.employees.findIndex(x => x.id === employee.id)
+	const employees = update(this.state.employees, {
+		[employeeIndex]: { $set: employee }
+	})
+	this.setState({employees: employees})
+}
+
 	render() {
 		return (
 			<div>
 				{this.state.employees.map((employee) => {
 					if(this.state.editingEmployeeId === employee.id) {
-						return(<EmployeeForm employee={employee} key={employee.id} />)
+						return(<EmployeeForm employee={employee} key={employee.id} updateEmployee={this.updateEmployee} />)
 					} else {
 						return (<Employee employee={employee} key={employee.id} />)
 					}		

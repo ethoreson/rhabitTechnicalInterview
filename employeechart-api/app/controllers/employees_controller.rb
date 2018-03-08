@@ -1,11 +1,17 @@
 class EmployeesController < ActionController::API
 	def index
-		@employees = Employee.order("manager_id ASC")
+		@employees = Employee.all
 		render json: @employees
 	end
 
 	def create
 		@employee = Employee.create(employee_params)
+		render json: @employee
+	end
+
+	def update
+		@employee = Employee.find(params[:id])
+		@employee.update_attributes(employee_params)
 		render json: @employee
 	end
 
