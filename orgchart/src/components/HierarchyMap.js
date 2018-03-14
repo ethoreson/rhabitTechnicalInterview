@@ -25,12 +25,15 @@ componentDidMount() {
   		function collectEmployees(employee) {
   			if (employee.direct_reports.length > 0) {
 			  	employee.direct_reports.forEach(function(manager) {
+			  		console.log("MANAGER:")
 			  		console.log(manager)
 			  		console.log("THIS:")
-			  		console.log(this)
+			  		console.log(response.state.employees)
 			  		var shovelManager = update(this.state.employees, {$splice: [[this.state.employees.length, 0, manager]]})
 			  		this.setState({employees: shovelManager})
+			  	if (manager.direct_reports.length > 0) {
 			  		collectEmployees(manager)
+			  	}
 			  	})
 			}
 	  	}
@@ -38,7 +41,7 @@ componentDidMount() {
   			console.log(response.data[0].direct_reports[i]) // ID 2, 3, 4, 15
   			var shovelThese = update(this.state.employees, {$splice: [[this.state.employees.length, 0, response.data[0].direct_reports[i]]]})
   			this.setState({employees: shovelThese})
-  			collectEmployees(response.data[0].direct_reports[i])
+  			// collectEmployees(response.data[0].direct_reports[i])
   		}
   })
   .catch(error => console.log(error))
