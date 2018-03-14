@@ -1,12 +1,24 @@
 class EmployeesController < ActionController::API
+	# helper_method :displayHierarchy
+
 	def index
-		@employees = Employee.all
+		@employee = Employee.find(1)
+		@employees = [userHash(@employee)]
 		render json: @employees
 	end
 
-	def has_managerId?
-		employee.manager_id?
-	end
+  	def userHash(user)
+	    data = {
+	    	id: user.id,
+	      first_name: user.first_name,
+	      last_name: user.last_name,
+	      title: user.title,
+	      manager_id: user.manager_id,
+	      direct_reports: Employee.select { |employee| employee.manager_id == user.id}.map do |employee|
+	      	userHash(employee)
+	      end
+	  	}
+  end
 
 	def create
 		@employee = Employee.create(employee_params)

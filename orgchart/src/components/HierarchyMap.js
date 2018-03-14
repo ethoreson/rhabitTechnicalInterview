@@ -3,6 +3,8 @@ import axios from 'axios'
 import Employee from './Employee'
 import update from 'immutability-helper'
 import EmployeeForm from './EmployeeForm'
+// import DirectReportsForm from './DirectReportsForm'
+// import DirectReports from './DirectReports'
 
 class HierarchyMap extends Component {
 
@@ -11,15 +13,33 @@ class HierarchyMap extends Component {
 		this.state = {
 			employees: [],
 			editingEmployeeId: null,
-			notification: ''
 		}
 	}
 
 componentDidMount() {
   axios.get(`http://localhost:3001/employees.json`)
   .then(response => {
-    console.log(response)
-    this.setState({employees: response.data})
+  		console.log(response.data[0]) // CEO
+  		var shovelCeo = update(this.state.employees, {$splice: [[this.state.employees.length, 0, response.data[0]]]})
+  		this.setState({employees: shovelCeo})
+  		function collectEmployees(employee) {
+  			if (employee.direct_reports.length > 0) {
+			  	employee.direct_reports.forEach(function(manager) {
+			  		console.log(manager)
+			  		console.log("THIS:")
+			  		console.log(this)
+			  		var shovelManager = update(this.state.employees, {$splice: [[this.state.employees.length, 0, manager]]})
+			  		this.setState({employees: shovelManager})
+			  		collectEmployees(manager)
+			  	})
+			}
+	  	}
+  		for(var i=0; i < response.data[0].direct_reports.length; i++) {
+  			console.log(response.data[0].direct_reports[i]) // ID 2, 3, 4, 15
+  			var shovelThese = update(this.state.employees, {$splice: [[this.state.employees.length, 0, response.data[0].direct_reports[i]]]})
+  			this.setState({employees: shovelThese})
+  			collectEmployees(response.data[0].direct_reports[i])
+  		}
   })
   .catch(error => console.log(error))
 }
@@ -50,11 +70,7 @@ updateEmployee = (employee) => {
 	const employees = update(this.state.employees, {
 		[employeeIndex]: { $set: employee }
 	})
-	this.setState({employees: employees, notification: 'Employee Added!'})
-}
-
-resetConfirmation = () => {
-	this.setState({notification: ''})
+	this.setState({employees: employees})
 }
 
 enableEditing = (id) => {
@@ -72,7 +88,9 @@ retireEmployee = (id) => {
 	.catch(error => console.log(error))
 }
 
-	render() {
+
+
+render() {
 		return (
 			<div>
 				{this.state.employees.map((employee) => {

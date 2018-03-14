@@ -13,7 +13,6 @@ class EmployeeForm extends Component {
 	}
 
 	handleInput = (e) => {
-		this.props.resetConfirmation()
 		this.setState({[e.target.name]: e.target.value})
 	}
 
@@ -34,23 +33,6 @@ class EmployeeForm extends Component {
 		})
 		.catch(error => console.log(error))
 	}
-
-	// handleSave = () => {
-	// 	const employee = {
-	// 		first_name: this.state.first_name,
-	// 		last_name: this.state.last_name,
-	// 		title: this.state.title,
-	// 		manager_id: this.state.manager_id
-	// 	}
-	// 	axios.put('http://localhost:3001/employees/${this.props.employee.id}',
-	// 	{employee: employee}
-	// 	)
-	// 	.then(response => {
-	// 		console.log(response)
-	// 		this.props.updateemployee(response.data)
-	// 	})
-	// 	.catch(error => console.log(error))
-	// }
 
 	render() {
 		return (
