@@ -12,6 +12,8 @@ cd employeechart-api
 rails db:migrate
 
 rails db:seed
+
+rails s -p 3001
 ```
 
 
